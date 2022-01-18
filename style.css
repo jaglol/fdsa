@@ -1,0 +1,35 @@
+body {
+        margin: 10px 60px;
+}
+a {
+        text-decoration: none;
+        color: black;
+}
+textarea {
+        width: 80%;
+        height: 80px;
+}
+button {
+        display: block;
+        margin: 10px 0;
+}
+
+.comments {
+        margin: 40px 0;
+}
+
+.bottom, .top-comment {
+        display: flex;
+        color: grey;
+        font-size: 12px;
+}
+.timestamp {
+        padding-right: 10px;
+}
+.comment-ts {
+        padding-left: 10px;
+}
+a1 {
+        text-decoration: none;
+        color: black;
+}

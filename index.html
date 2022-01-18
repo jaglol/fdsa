@@ -1,0 +1,109 @@
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload = "getThread()">
+	<div class="top-bar">
+		<h>
+			Forum
+		</h>
+	</div>
+	
+	<textarea id = "headin"></textarea>
+	<textarea id = "descript"></textarea>
+	<button onclick = "window.location.reload(true)" class = "push">Add Thread</button>
+	<div class="main">
+		<ol>
+		</ol>
+	</div>
+	<script src="data.js"></script>
+	<script>
+	var idcnter = 3
+	var pbtn = document.querySelector('.push');
+        pbtn.addEventListener('click', function() {
+		var heading = document.getElementById("headin").value
+		var descript = document.getElementById("descript").value
+
+		var threadfo = {
+			id: idcnter,
+			title: heading,
+			author: "Anonymous",
+			date: Date.now(),
+			content: descript,
+			comments: [
+			{
+				id: idcnter,
+				author: "Stuff",
+				date: Date.now(),
+				content: "Test"
+			},
+        ]
+		}
+		idcnter += 1
+		const data = {threadfo};
+		console.log(data + "!!!")
+                const options = {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                        'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                };
+                console.log("clicked the button");
+                fetch('https://StrikingHappyPixel.1el680103.repl.co', options)
+                .then(response => response.json())
+                .then(data => {
+                console.log("Ran")
+                console.log('Success:', data);
+                return data;
+                })
+                
+                
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+	});
+
+
+	function threadMaker(threads) {
+		var container = document.querySelector('ol');
+		for (let thread of threads) {
+		console.log(thread)
+		console.log("++++++++++++++++++++++++++++++++")
+		console.log(threads)
+		console.log("))))))))))))))))))))")
+		var html = 
+		`
+		
+		<li class="row">
+			<a href="thread.html?${thread.id}">
+			<h4 class="title">
+				${thread.title}
+			</h4>
+			<h7 class="content">
+				${thread.content}
+			</h7>
+			<div class="bottom">
+				<p class="timestamp">
+				${new Date(thread.date).toLocaleString()}
+				</p>
+				
+
+				<p class="comment-count">
+				${thread.comments.length} comments
+				</p>
+			</div>
+			</a>
+		</li>
+		`
+		console.log("********************")
+		container.insertAdjacentHTML('beforeend', html);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@")
+		}
+		console.log("DONEDONEDONEDONEDONEDONEDONEDONEDONEDONE")
+	}
+    </script>
+    <style>
+    </style>
+</body>

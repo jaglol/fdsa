@@ -1,0 +1,99 @@
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="getComment()">
+        
+	<div class="top-bar">
+		<a href = "index.html">
+			Forum
+		</a>
+	</div>
+	<button onclick="clearStuff()">CLEAR</button>
+        <div class="main">
+                <div class="header">
+                </div>
+                <textarea></textarea>
+                <button class = 'hellothere'>add comment</button>
+                <div class="comments">
+                </div>
+        </div>
+        <script src="data.js"></script>
+        <script>
+		console.log("ranNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+                var id = window.location.search.slice(1);
+		console.log("ranNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN1")
+		console.log(threads)
+                var thread = threads.find(t => t.id == id);
+		console.log("ranNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN2")
+		console.log(thread)
+		console.log("??????????????????????????????????????")
+                var header = document.querySelector('.header');
+                var headerHtml = `
+                <h4 class="title">
+                        ${thread.title} 
+		<footer>
+			Id:${thread.id}
+		</footer>
+                <div class="bottom">
+                        <p class="timestamp">
+                        ${new Date(thread.date).toLocaleString()}
+                        </p>
+                        <p class="comment-count">
+                        ${thread.comments.length} comments
+                        </p>
+                </div>
+                `
+                header.insertAdjacentHTML('beforeend', headerHtml)
+                function clearStuff(){
+                        localStorage.clear()  
+                }
+                function addComment(comment) {
+                var commentHtml = `
+                        <div class="comment">
+                        <div class="top-comment">
+                                <p class="user">
+                                ${comment.author}
+                                </p>
+                                <p class="comment-ts">
+                                ${new Date(comment.date).toLocaleString()}
+                                </p>
+                        </div>
+                        <div class="comment-htent">
+                                ${comment.content}
+                        </div>
+                        </div>
+                `
+                comments.insertAdjacentHTML('beforeend', commentHtml);
+                }
+
+                var comments = document.querySelector('.comments');
+                for (let comment of thread.comments) {
+                addComment(comment);
+                }
+                var btn = document.querySelector('.hellothere');
+                btn.addEventListener('click', function() {
+                var txt = document.querySelector('textarea');
+                var comment = {
+			id:id,
+                        content: txt.value,
+                        date: Date.now(),
+                        author: 'Anonymous '
+                }
+                addComment(comment);
+                txt.value = '';
+                thread.comments.push(comment);
+                //localStorage.setItem('threads', JSON.stringify(threads));
+		console.log(comment)
+                const data = {comment};
+                postInfo(data);
+                return data
+                
+
+
+                })
+        </script>
+        <style>
+
+        </style>
+</body>
